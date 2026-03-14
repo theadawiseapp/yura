@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-coral: #FF5F6D;
+  --color-coral-light: #FF8A94;
+  --color-coral-dark: #E8454F;
+  --color-bg: #F9F9F9;
+  --color-navy: #1A1C1E;
+  --color-grey: #6B7280;
+  --color-grey-light: #9CA3AF;
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-dm-serif);
+}
+
+:root {
+  --background: #F9F9F9;
+  --foreground: #1A1C1E;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fade-up animation */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+/* ── Animated card keyframes ── */
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 0.8s steps(1) infinite;
+}
+
+/* Shimmer across send button */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+/* Confetti burst */
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) rotate(720deg) scale(0);
+  }
+}
+
+.animate-confetti {
+  animation: confetti 1.5s ease-out forwards;
+}
+
+/* Success checkmark bounce */
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease forwards;
+}
+
+/* ── Splash screen keyframes ── */
+
+/* SVG path draw — left path (shorter, draws first) */
+.splash-path-1 {
+  animation: draw-path 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+}
+
+/* SVG path draw — right path + tail (longer, draws with slight overlap) */
+.splash-path-2 {
+  animation: draw-path 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.9s forwards;
+}
+
+@keyframes draw-path {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Emoji float up + fade out */
+@keyframes emoji-float {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5) rotate(var(--rotate, 0deg));
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(var(--rotate, 0deg));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.8) rotate(var(--rotate, 0deg));
+  }
+}
+
+.animate-emoji-float {
+  animation: emoji-float var(--duration, 1.5s) ease-out forwards;
+}
