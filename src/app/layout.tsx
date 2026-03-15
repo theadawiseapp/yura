@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "Yura — Send & Request Gifts",
   description:
     "Discover, send, and request the perfect gifts. A social gifting platform launching in Tamale, Ghana.",
+  icons: {
+    icon: "/assets/yura-logo.png",
+    apple: "/assets/yura-logo.png",
+  },
 };
 
 export default function RootLayout({

@@ -1,3 +1,4 @@
+import { FaXTwitter, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import { YuraLogo } from "./YuraLogo";
 
 const footerLinks = {
@@ -9,8 +10,8 @@ const footerLinks = {
   ],
   Company: [
     { label: "About Us", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Blog", href: "#" },
+   
+    
     { label: "Contact", href: "#" },
   ],
   Legal: [
@@ -27,8 +28,8 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-12 mb-12">
           {/* Brand */}
           <div>
-            <a href="#" className="inline-flex items-center gap-2.5">
-              <YuraLogo className="w-8 h-8" />
+            <a href="#" className="inline-flex items-center gap-2">
+              <YuraLogo className="w-10 h-10" />
               <span className="font-serif text-[22px] text-white">Yura</span>
             </a>
             <p className="text-[15px] leading-relaxed mt-4 max-w-[300px]">
@@ -59,14 +60,18 @@ export function Footer() {
         <div className="border-t border-white/8 pt-9 flex flex-col sm:flex-row justify-between items-center gap-4 text-[13px]">
           <span>&copy; 2026 Yura. All rights reserved.</span>
           <div className="flex gap-4">
-            {["X", "IG", "WA"].map((label) => (
+            {[
+              { icon: <FaXTwitter size={18} />, label: "X (Twitter)", href: "#" },
+              { icon: <FaInstagram size={18} />, label: "Instagram", href: "#" },
+              { icon: <FaWhatsapp size={18} />, label: "WhatsApp", href: "#" },
+            ].map((social) => (
               <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center text-white/60 hover:bg-coral hover:text-white transition-all text-sm font-semibold"
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                className="w-10 h-10 rounded-full bg-white/[0.06] flex items-center justify-center text-white/60 hover:bg-coral hover:text-white transition-all"
               >
-                {label}
+                {social.icon}
               </a>
             ))}
           </div>

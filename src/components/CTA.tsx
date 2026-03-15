@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, FormEvent } from "react";
 import { useInView } from "@/hooks/useInView";
 
 interface ConfettiPiece {
@@ -21,29 +21,38 @@ const CONFETTI_COLORS = [
   "#E8454F", "#FF85A1", "#FFC2D1", "#FB6F92",
 ];
 
+// TODO: Replace with actual API call when backend is ready
+async function submitEmail(email: string): Promise<{ success: boolean }> {
+  // Store locally until API is available
+  const existing = JSON.parse(localStorage.getItem("yura_waitlist") || "[]");
+  if (!existing.includes(email)) {
+    existing.push(email);
+    localStorage.setItem("yura_waitlist", JSON.stringify(existing));
+  }
+  return { success: true };
+}
+
 export function CTA() {
   const ref = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const visible = useInView(ref);
-  const [celebrated, setCelebrated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [showSuccess, setShowSuccess] = useState(false);
   const piecesRef = useRef<ConfettiPiece[]>([]);
   const rafRef = useRef<number>(0);
 
   const launchConfetti = useCallback(() => {
-    if (celebrated || !canvasRef.current) return;
-    setCelebrated(true);
+    if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Size canvas to section
     const rect = canvas.parentElement!.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
 
-    // Create confetti pieces bursting from center
     const pieces: ConfettiPiece[] = [];
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
@@ -64,11 +73,6 @@ export function CTA() {
       });
     }
     piecesRef.current = pieces;
-
-    // Show success text after a beat
-    setTimeout(() => setShowSuccess(true), 400);
-    // Hide success after a while
-    setTimeout(() => setShowSuccess(false), 3000);
 
     let frame = 0;
     const gravity = 0.15;
@@ -118,7 +122,26 @@ export function CTA() {
     };
 
     rafRef.current = requestAnimationFrame(animate);
-  }, [celebrated]);
+  }, []);
+
+  const handleSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || status === "submitting" || status === "success") return;
+
+    setStatus("submitting");
+    try {
+      const res = await submitEmail(email.trim());
+      if (res.success) {
+        setStatus("success");
+        setShowSuccess(true);
+        launchConfetti();
+        setTimeout(() => setShowSuccess(false), 3000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  }, [email, status, launchConfetti]);
 
   useEffect(() => {
     return () => {
@@ -172,22 +195,38 @@ export function CTA() {
           <p className="text-lg text-white/90 max-w-[480px] mx-auto mb-10 relative z-10">
             Join the waitlist and be among the first to send and request gifts on Yura when we launch in Tamale.
           </p>
-          <div className="flex flex-wrap gap-4 justify-center relative z-10">
+
+          {/* Email form */}
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-[520px] mx-auto relative z-10">
+            <input
+              type="email"
+              required
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={status === "success"}
+              className="w-full sm:flex-1 px-6 py-4 rounded-full text-base text-navy bg-white outline-none placeholder:text-grey-light shadow-[0_4px_20px_rgba(0,0,0,0.1)] disabled:opacity-60"
+            />
             <button
-              onClick={launchConfetti}
-              className={`bg-white text-coral px-9 py-4 rounded-full text-base font-bold shadow-[0_4px_20px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all cursor-pointer ${
-                celebrated ? "ring-2 ring-white/50 ring-offset-2 ring-offset-coral" : ""
+              type="submit"
+              disabled={status === "submitting" || status === "success"}
+              className={`w-full sm:w-auto bg-white text-coral px-9 py-4 rounded-full text-base font-bold shadow-[0_4px_20px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 ${
+                status === "success" ? "ring-2 ring-white/50 ring-offset-2 ring-offset-coral" : ""
               }`}
             >
-              {celebrated ? "You're In! 🎉" : "Join the Waitlist"}
+              {status === "submitting" ? "Joining..." : status === "success" ? "You're In! 🎉" : "Join Waitlist"}
             </button>
-            <a
-              href="#features"
-              className="bg-transparent text-white px-9 py-4 rounded-full text-base font-semibold border-2 border-white/40 hover:border-white hover:-translate-y-0.5 transition-all"
-            >
-              Learn More
-            </a>
-          </div>
+          </form>
+          {status === "error" && (
+            <p className="text-white/90 text-sm mt-3 relative z-10">Something went wrong. Please try again.</p>
+          )}
+
+          <a
+            href="#features"
+            className="inline-block mt-6 text-white/80 text-sm font-medium hover:text-white transition-colors relative z-10"
+          >
+            Learn more about Yura
+          </a>
         </div>
       </div>
     </section>

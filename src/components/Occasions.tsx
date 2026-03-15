@@ -82,9 +82,7 @@ function OccasionCard({
       <div className="p-7">
         <h3 className="font-serif text-[22px] text-navy mb-2">{occasion.title}</h3>
         <p className="text-sm text-grey leading-relaxed mb-4">{occasion.description}</p>
-        <a href="#" className="text-sm font-semibold text-coral inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
-          Explore Gifts <span>&rarr;</span>
-        </a>
+        
       </div>
     </div>
   );
