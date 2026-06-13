@@ -1,18 +1,17 @@
+import Link from "next/link";
 import { FaXTwitter, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import { YuraLogo } from "./YuraLogo";
 
 const footerLinks = {
   Product: [
-    { label: "Features", href: "#features" },
-    { label: "Occasions", href: "#occasions" },
-    { label: "How It Works", href: "#how-it-works" },
+    { label: "Features", href: "/#features" },
+    { label: "Occasions", href: "/#occasions" },
+    { label: "How It Works", href: "/#how-it-works" },
     { label: "For Vendors", href: "#" },
   ],
   Company: [
     { label: "About Us", href: "#" },
-   
-    
-    { label: "Contact", href: "#" },
+    { label: "Contact", href: "/support" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "#" },
@@ -46,9 +45,9 @@ export function Footer() {
               <ul className="list-none space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-[15px] text-white/60 hover:text-white transition-colors">
+                    <Link href={link.href} className="text-[15px] text-white/60 hover:text-white transition-colors">
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

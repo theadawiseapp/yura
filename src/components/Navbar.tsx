@@ -29,27 +29,32 @@ export function Navbar() {
 
           <ul className="hidden md:flex items-center gap-9 list-none">
             <li>
-              <a href="#features" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
+              <Link href="/#features" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
                 Features
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#occasions" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
+              <Link href="/#occasions" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
                 Occasions
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#how-it-works" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
+              <Link href="/#how-it-works" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
                 How It Works
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#cta"
+              <Link href="/support" className="text-[15px] font-medium text-grey hover:text-navy transition-colors">
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/#cta"
                 className="bg-coral text-white px-6 py-2.5 rounded-full text-[15px] font-semibold hover:bg-coral-dark transition-all hover:-translate-y-0.5"
               >
                 Get Early Access
-              </a>
+              </Link>
             </li>
           </ul>
 
@@ -68,22 +73,25 @@ export function Navbar() {
       {/* Mobile nav */}
       {mobileOpen && (
         <div className="fixed top-[72px] left-0 right-0 bg-white p-6 shadow-xl z-40 md:hidden">
-          <a href="#features" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
+          <Link href="/#features" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
             Features
-          </a>
-          <a href="#occasions" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
+          </Link>
+          <Link href="/#occasions" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
             Occasions
-          </a>
-          <a href="#how-it-works" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
+          </Link>
+          <Link href="/#how-it-works" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
             How It Works
-          </a>
-          <a
-            href="#cta"
+          </Link>
+          <Link href="/support" onClick={() => setMobileOpen(false)} className="block py-3 text-base font-medium text-navy border-b border-black/4">
+            Contact
+          </Link>
+          <Link
+            href="/#cta"
             onClick={() => setMobileOpen(false)}
             className="block mt-4 text-center bg-coral text-white py-3.5 rounded-full font-semibold"
           >
             Get Early Access
-          </a>
+          </Link>
         </div>
       )}
     </>
