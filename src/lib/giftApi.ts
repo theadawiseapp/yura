@@ -173,9 +173,9 @@ export function formatCedis(amount: string | number): string {
   })}`;
 }
 
-/** Custom-scheme deep link that opens the gift request in the Yura app. */
+/** Universal link that opens the gift request in the Yura app (falls back to browser). */
 export function appDeepLink(slug: string): string {
-  return `yura://request/${slug}`;
+  return `https://api.myyuraapp.com/request/${slug}`;
 }
 
 /** Clamp a numeric-ish progress value to 0–100. */
