@@ -163,14 +163,19 @@ export async function verifyContribution(
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Format a decimal string amount as Ghana cedis, e.g. "60.00" -> "₵60.00". */
+/** Format a decimal string amount as Ghana cedis, e.g. "60.00" -> "GH₵60.00". */
 export function formatCedis(amount: string | number): string {
   const n = typeof amount === "number" ? amount : parseFloat(amount);
-  if (Number.isNaN(n)) return `₵${amount}`;
-  return `₵${n.toLocaleString("en-GH", {
+  if (Number.isNaN(n)) return `GH₵${amount}`;
+  return `GH₵${n.toLocaleString("en-GH", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
+}
+
+/** Custom-scheme deep link that opens the gift request in the Yura app. */
+export function appDeepLink(slug: string): string {
+  return `yura://request/${slug}`;
 }
 
 /** Clamp a numeric-ish progress value to 0–100. */

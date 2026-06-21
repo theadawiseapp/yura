@@ -156,3 +156,25 @@ body {
 .animate-emoji-float {
   animation: emoji-float var(--duration, 1.5s) ease-out forwards;
 }
+
+/* ── Floating hearts background (gift request page) ── */
+@keyframes heart-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  10% {
+    opacity: 0.45;
+  }
+  90% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) scale(1);
+  }
+}
+
+.animate-heart-rise {
+  animation: heart-rise linear infinite;
+}
