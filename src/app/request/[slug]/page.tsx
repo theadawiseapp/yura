@@ -59,7 +59,7 @@ export async function generateMetadata({
 
 export default async function GiftRequestPage({ params }: PageProps) {
   const { slug } = await params;
-  const gift = await getGiftRequest(slug);
+  const gift = await getGiftRequest(slug).catch(() => null);
 
   if (!gift) notFound();
 
