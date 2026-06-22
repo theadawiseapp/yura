@@ -5,8 +5,7 @@ import { appDeepLink } from "@/lib/giftApi";
 
 const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.AdawiseTechnologiesLimited.myyura";
-// TODO: replace with the real App Store URL once the iOS app is live.
-const APP_STORE_URL = "#";
+const APP_STORE_URL = "https://apps.apple.com/us/app/myyura/id6776849366";
 
 interface AppOpenButtonsProps {
   slug: string;
